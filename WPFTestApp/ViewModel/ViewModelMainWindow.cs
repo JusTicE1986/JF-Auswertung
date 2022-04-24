@@ -22,6 +22,8 @@ namespace WPFTestApp.ViewModel
             MannschaftsArt.Add("Gruppe");
             MannschaftsArt.Add("Staffel");
 
+            NeueMannschaft = new Mannschaft();
+
             // Initialisierung des RelayCommands
             NeuerJugendlicherHinzu = new RelayCommands(NeuerJugendlicherHinzuExecute, NeuerJugendlicherHinzuCanExecute);
             NeueMannschaftHinzu = new RelayCommands(NeueMannschaftHinzuExecute, NeueMannschaftHinzuCanExecute);
@@ -37,8 +39,19 @@ namespace WPFTestApp.ViewModel
 
         #endregion
         #region Properties
-        public Jugendlicher NeuerJugendlicher { get; set; } = new Jugendlicher();
-        public Mannschaft NeueMannschaft { get; set; } = new Mannschaft();
+        private Jugendlicher _neuerJugendlicher;
+        public Jugendlicher NeuerJugendlicher 
+        {
+
+            get { return _neuerJugendlicher; }
+            set { SetProperty<Jugendlicher>(ref _neuerJugendlicher, value); }
+        }
+        private Mannschaft _neueMannschaft;
+        public Mannschaft NeueMannschaft
+        {
+            get { return _neueMannschaft; }
+            set { SetProperty<Mannschaft>(ref _neueMannschaft, value); }
+        }
         #endregion
         #region Fields
         private ObservableCollection<Jugendlicher> _listJugendlicher;
@@ -64,39 +77,26 @@ namespace WPFTestApp.ViewModel
             set {SetProperty<List<string>> (ref _mannschaftsArt , value); }
         }
 
-        private bool _isOutCompetition;
-
-        public bool IsOutCompetition
-        {
-            get { return _isOutCompetition; }
-            set {SetProperty<bool> (ref _isOutCompetition , value); }
-        }
-
-
         #endregion
         #region Methoden
 
-        //Methode zum Hinzufügen eines Jugendlichen.
         private bool NeuerJugendlicherHinzuCanExecute(object sender)
         {
             return true;
-        } // immer ausführbar durch "return true"
+        }
         private void NeuerJugendlicherHinzuExecute(object sender)
         {
+            if (sender == null) return;
             Mannschaft _mannschaft = sender as Mannschaft;
             if (NeuerJugendlicher == null) return;
-            if (_mannschaft.ListOfJugendliche == null)
-            {
-                _mannschaft.ListOfJugendliche = new ObservableCollection<Jugendlicher> ();
-            };
-            if (ListJugendlicher.Count >= 9 && NeueMannschaft.MannschaftsArt == "Gruppe")
+            if (_mannschaft.ListOfJugendliche.Count >= 9 && NeueMannschaft.MannschaftsArt == "Gruppe")
             {
                 MessageBox.Show("Gruppe ist bereits voll.", "Fehler bei der Eingabe",
                     MessageBoxButton.OK, 
                     MessageBoxImage.Error);
                 return;
             }
-            if (ListJugendlicher.Count >= 6 && NeueMannschaft.MannschaftsArt == "Staffel")
+            if (_mannschaft.ListOfJugendliche.Count >= 6 && NeueMannschaft.MannschaftsArt == "Staffel")
             {
                 MessageBox.Show("Staffel ist bereits voll.", "Fehler bei der Eingabe",
                     MessageBoxButton.OK,
@@ -112,17 +112,25 @@ namespace WPFTestApp.ViewModel
             }
             if (NeuerJugendlicher.LastName == null)
             {
-                MessageBox.Show("Keinen Nachnamen eingegeben", "Fehler bei der Eingabe",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Keinen Nachnamen eingegeben.", "Fehler bei der Eingabe",
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Error);
+                return;
+            }
+            if (NeuerJugendlicher.GeburtsDatum == null)
+            {
+                MessageBox.Show("Kein Geburtsdatum eingegeben.", "Fehler bei der Eingabe",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
                 return;
             }
             var _jugendlicher = new Jugendlicher(NeuerJugendlicher.FirstName,
                 NeuerJugendlicher.LastName, NeuerJugendlicher.GeburtsDatum, NeuerJugendlicher.CalculateAgeInYears());
             
             _mannschaft.ListOfJugendliche.Add(_jugendlicher);
+            NeuerJugendlicher = new Jugendlicher();
             
         }
-
         private bool JugendlicherEntfernenCanExecute(object sender)
         {
             if (sender == null) return false;
@@ -131,9 +139,8 @@ namespace WPFTestApp.ViewModel
         private void JugendlicherEntfernenExecute(object sender)
         {
             Jugendlicher jugendlicher = sender as Jugendlicher;
-            ListJugendlicher.Remove(jugendlicher);
+            NeueMannschaft.ListOfJugendliche.Remove(jugendlicher);
         }
-
         private bool NeueMannschaftHinzuCanExecute(object sender) { return true; }
         private void NeueMannschaftHinzuExecute(object sender)
         {
@@ -141,18 +148,24 @@ namespace WPFTestApp.ViewModel
             {
                 Team = new ObservableCollection<Mannschaft> ();
             };
+            //if (sender == null) return;
+            //Mannschaft NeueMannschaft = sender as Mannschaft;
+            if (NeueMannschaft == null)
+            {
+                NeueMannschaft = new Mannschaft();
+            }
 
-            if(NeueMannschaft.MannschaftName == null)
+            if (NeueMannschaft.MannschaftName == null)
             {
                 MessageBox.Show("Keinen Mannschaftsnamen eingegeben", "Fehler bei der Eingabe",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Error);
                 return;
             }
-            var _mannschaft = new Mannschaft(NeueMannschaft.MannschaftName, ListJugendlicher, MannschaftsArt.ToString(), IsOutCompetition);
+            var _mannschaft = new Mannschaft(NeueMannschaft.MannschaftName, new ObservableCollection<Jugendlicher>(), NeueMannschaft.MannschaftsArt, NeueMannschaft.IsOutOfCompetition);
             Team.Add(_mannschaft);
-            ListJugendlicher = new ObservableCollection<Jugendlicher> ();
+            NeueMannschaft = new Mannschaft();
         }
-
         private bool MannschaftEntfernenCanExecute(object sender) 
         {
             if (sender == null) return false;

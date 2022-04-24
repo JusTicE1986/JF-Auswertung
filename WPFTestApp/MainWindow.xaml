@@ -35,22 +35,21 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.ColumnSpan="2" Content="MANNSCHAFT HINZUFÜGEN" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
-
             <Label Grid.Row="1" Grid.Column="0" Content="Mannschaftsname:" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbx_SelectedTeam" Text="{Binding NeueMannschaft.MannschaftName}" Margin="2"/>
+            <TextBox x:Name="txt_mannschaft" Grid.Row="1" Grid.Column="1" Text="{Binding NeueMannschaft.MannschaftName, Mode=TwoWay}" Margin="2"/>
             <Label Grid.Row="2" Grid.Column="0" Content="Mannschaftsart:" HorizontalContentAlignment="Right"/>
-            <ComboBox Grid.Column="1" Grid.Row="2" x:Name="cmb_ArtDerMannschaft" ItemsSource="{Binding MannschaftsArt, Mode=TwoWay}" SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2"/>
+            <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding MannschaftsArt}" SelectedItem="{Binding NeueMannschaft.MannschaftsArt}" HorizontalContentAlignment="Center" Margin="2"/>
             <Label Grid.Row="3" Grid.Column="0" Content="Besonderheit:" HorizontalContentAlignment="Right"/>
-            <CheckBox Grid.Row="3" Grid.Column="1" x:Name="chk_Konkurrenz" Content="Außer Konkurrenz" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <CheckBox Grid.Row="3" Grid.Column="1" Content="Außer Konkurrenz" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding NeueMannschaft.IsOutOfCompetition}"/>
             <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right">
-                <Button x:Name="btn_AddMannschaft" Content="Mannschaft hinzufügen" Command="{Binding NeueMannschaftHinzu}" Margin="2"/>
-                <Button x:Name="btn_delMannschaft" Content="Mannschaft entfernen" Command="{Binding MannschaftEntfernen}" CommandParameter="{Binding ElementName=dgTeam, Path=SelectedItem}" Margin="2"/>
+                <Button Content="Mannschaft hinzufügen" Command="{Binding NeueMannschaftHinzu}" Margin="2"/>
+                <Button Content="Mannschaft entfernen" Command="{Binding MannschaftEntfernen}" CommandParameter="{Binding ElementName=dgTeam, Path=SelectedItem}" Margin="2"/>
             </StackPanel>
             <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" x:Name="dgTeam"  AutoGenerateColumns="False" Margin="2" ItemsSource="{Binding Team}" CanUserAddRows="False">
                 <DataGrid.Columns >
-                    <DataGridTextColumn x:Name="dg_Teams" Width="*" Header="Bekannte Teams" Binding="{Binding MannschaftName}"/>
-                    <DataGridTextColumn x:Name="dg_Art" Width="0.3*" Header="Kategorie" Binding="{Binding ElementName=cmb_ArtDerMannschaft, Path=SelectedValue}"/>
-                    <DataGridTextColumn x:Name="dg_Konkurrenz" Width="0.3*" Header="Außer Konkurrenz" Binding="{Binding IsOutOfCompetition}"/>
+                    <DataGridTextColumn Width="0.6*" Header="Bekannte Teams" Binding="{Binding MannschaftName}"/>
+                    <DataGridTextColumn Width="0.3*" Header="Kategorie" Binding="{Binding MannschaftsArt}"/>
+                    <DataGridTextColumn Width="0.3*" Header="Außer Konkurrenz" Binding="{Binding IsOutOfCompetition}"/>
 
                 </DataGrid.Columns>
             </DataGrid>
@@ -77,10 +76,10 @@
             <Label Grid.Row="3" Grid.Column="0" Content="Nachname:" HorizontalContentAlignment="Right"/>
             <Label Grid.Row="4" Grid.Column="0" Content="Geburtsdatum:" HorizontalContentAlignment="Right"/>
 
-            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cmb_selectionMannschaft" ItemsSource="{Binding Path=Team}" SelectedItem="{Binding ElementName=dgTeam, Path=SelectedItem}" DisplayMemberPath="MannschaftName" Margin="2"/>
-            <TextBox Grid.Row="2" Grid.Column="1" x:Name="txt_firstName" Text="{Binding NeuerJugendlicher.FirstName}" Margin="2"/>
-            <TextBox Grid.Row="3" Grid.Column="1" x:Name="txt_lastName" Text="{Binding NeuerJugendlicher.LastName}" Margin="2"/>
-            <DatePicker Grid.Row="4" Grid.Column="1" x:Name="txt_GeburtsDatum" Text="{Binding NeuerJugendlicher.GeburtsDatum, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ConverterCulture=de-DE}" Margin="2"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Team}" SelectedValuePath="MannschaftsName" Margin="2"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NeuerJugendlicher.FirstName}" Margin="2"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NeuerJugendlicher.LastName}" Margin="2"/>
+            <DatePicker Grid.Row="4" Grid.Column="1" Text="{Binding NeuerJugendlicher.GeburtsDatum, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ConverterCulture=de-DE}" Margin="2"/>
             <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button  x:Name="btn_AddJugendlicher" Content="Teilnehmer hinzufügen" Command="{Binding NeuerJugendlicherHinzu}" CommandParameter="{Binding ElementName=dgTeam, Path=SelectedItem}" Margin="2"/>    
                 <Button  x:Name="btn_delJugendlicher" Content="Teilnehmer entfernen" Command="{Binding JugendlicherEntfernen}" CommandParameter="{Binding ElementName=dgAddedMembers, Path=SelectedItem}" Margin="2"/>    
@@ -94,7 +93,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Grid.ColumnSpan="2" Content="ANGELEGTE JUGENDLICHE" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
-                <DataGrid Grid.Column="1" Grid.Row="1" x:Name="dgAddedMembers" ItemsSource="{Binding ElementName=dgTeam, Path=SelectedItem.ListOfJugendliche}" AutoGenerateColumns="False" Margin="2">
+                <DataGrid Grid.Column="1" Grid.Row="1" x:Name="dgAddedMembers" ItemsSource="{Binding ElementName=dgTeam, Path=SelectedItem.ListOfJugendliche}" AutoGenerateColumns="False" Margin="2" CanUserDeleteRows="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Vorname" Binding="{Binding FirstName}"/>
 
