@@ -24,11 +24,12 @@ namespace WPFTestApp.Model
             set { SetProperty<ObservableCollection<Jugendlicher>> (ref _listOfJugendliche , value); }
         }
         public Mannschaft() { }
-        public Mannschaft(string teamName, ObservableCollection<Jugendlicher> jugendlichers, string mannschaftsart) 
+        public Mannschaft(string teamName, ObservableCollection<Jugendlicher> jugendlichers, string mannschaftsart, bool competition) 
         {
             this.MannschaftName = teamName;
             this.ListOfJugendliche = jugendlichers;
             this.MannschaftsArt = mannschaftsart;
+            this.IsOutOfCompetition = competition;
         }
 
         private string _mannschaftsArt;
@@ -38,6 +39,15 @@ namespace WPFTestApp.Model
             get { return _mannschaftsArt; }
             set {SetProperty<string> (ref _mannschaftsArt , value); }
         }
+
+        private bool _isOutOfCompetition;
+
+        public bool IsOutOfCompetition
+        {
+            get { return _isOutOfCompetition; }
+            set {SetProperty<bool> (ref _isOutOfCompetition , value); }
+        }
+
 
     }
 }

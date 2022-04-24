@@ -48,8 +48,10 @@
             </StackPanel>
             <DataGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" x:Name="dgTeam"  AutoGenerateColumns="False" Margin="2" ItemsSource="{Binding Team}" CanUserAddRows="False">
                 <DataGrid.Columns >
-                    <DataGridTextColumn x:Name="dataGridTextColumn" Width="*" Header="Bekannte Teams" Binding="{Binding MannschaftName}">
-                    </DataGridTextColumn>
+                    <DataGridTextColumn x:Name="dg_Teams" Width="*" Header="Bekannte Teams" Binding="{Binding MannschaftName}"/>
+                    <DataGridTextColumn x:Name="dg_Art" Width="0.3*" Header="Kategorie" Binding="{Binding ElementName=cmb_ArtDerMannschaft, Path=SelectedValue}"/>
+                    <DataGridTextColumn x:Name="dg_Konkurrenz" Width="0.3*" Header="Außer Konkurrenz" Binding="{Binding IsOutOfCompetition}"/>
+
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
@@ -81,7 +83,7 @@
             <DatePicker Grid.Row="4" Grid.Column="1" x:Name="txt_GeburtsDatum" Text="{Binding NeuerJugendlicher.GeburtsDatum, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ConverterCulture=de-DE}" Margin="2"/>
             <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button  x:Name="btn_AddJugendlicher" Content="Teilnehmer hinzufügen" Command="{Binding NeuerJugendlicherHinzu}" CommandParameter="{Binding ElementName=dgTeam, Path=SelectedItem}" Margin="2"/>    
-                <Button  x:Name="btn_delJugendlicher" Content="Teilnehmer entfernen" Command="{Binding JugendlicherEntfernen}" CommandParameter="{Binding ElementName=dgAddedMembers, Path=SelectedValue}" Margin="2"/>    
+                <Button  x:Name="btn_delJugendlicher" Content="Teilnehmer entfernen" Command="{Binding JugendlicherEntfernen}" CommandParameter="{Binding ElementName=dgAddedMembers, Path=SelectedItem}" Margin="2"/>    
                 
             </StackPanel>
              

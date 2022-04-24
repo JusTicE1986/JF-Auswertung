@@ -64,6 +64,14 @@ namespace WPFTestApp.ViewModel
             set {SetProperty<List<string>> (ref _mannschaftsArt , value); }
         }
 
+        private bool _isOutCompetition;
+
+        public bool IsOutCompetition
+        {
+            get { return _isOutCompetition; }
+            set {SetProperty<bool> (ref _isOutCompetition , value); }
+        }
+
 
         #endregion
         #region Methoden
@@ -140,7 +148,7 @@ namespace WPFTestApp.ViewModel
                     MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            var _mannschaft = new Mannschaft(NeueMannschaft.MannschaftName, ListJugendlicher, MannschaftsArt.ToString());
+            var _mannschaft = new Mannschaft(NeueMannschaft.MannschaftName, ListJugendlicher, MannschaftsArt.ToString(), IsOutCompetition);
             Team.Add(_mannschaft);
             ListJugendlicher = new ObservableCollection<Jugendlicher> ();
         }
