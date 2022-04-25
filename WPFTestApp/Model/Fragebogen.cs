@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WPFTestApp.Model
 {
@@ -12,31 +8,39 @@ namespace WPFTestApp.Model
         {
             if (_isGruppe) Generate(9);
             if (_isStaffel) Generate(6);
-                    
+
         }
 
-        private List<ErgebnisseClass> _ergebnisse;
+        #region propertys 
 
-        public List<ErgebnisseClass> Ergebnisse
+        private List<ErgebnisClass> _ergebnisse;
+        public List<ErgebnisClass> Ergebnisse
         {
             get { return _ergebnisse; }
-            set {SetProperty<List<ErgebnisseClass>> (ref _ergebnisse , value); }
+            set { SetProperty<List<ErgebnisClass>>(ref _ergebnisse, value); }
         }
+
+        #endregion
+
+        #region methods
 
         private void Generate(int _anzahl)
         {
-            Ergebnisse = new List<ErgebnisseClass> ();
+            Ergebnisse = new List<ErgebnisClass>();
 
             for (int i = 1; i < _anzahl; i++)
             {
-                Ergebnisse.Add(new ErgebnisseClass() { IDFragebogen = i });
+                Ergebnisse.Add(new ErgebnisClass() { IDFragebogen = i });
             }
         }
 
-    public class ErgebnisseClass
+        #endregion
+
+    }
+
+    public class ErgebnisClass
     {
         public int IDFragebogen { get; set; }
         public int Ergebnis { get; set; }
-    }
     }
 }
