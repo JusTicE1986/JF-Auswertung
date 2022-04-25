@@ -21,6 +21,13 @@ namespace WPFTestApp.ViewModel
             // Werte für die Combobox cmb_MannschaftsArt
             MannschaftsArt = new List<string>() { "Gruppe", "Staffel"};
 
+            CorrectAnswers = new List<int>();
+
+            for (int i = 0; i < 16; i++)
+            {
+                CorrectAnswers.Add(i);
+            }
+
             //first time init
             NeueMannschaft = new Mannschaft();
             NeuerJugendlicher = new Jugendlicher();            
@@ -65,6 +72,23 @@ namespace WPFTestApp.ViewModel
             get { return _neueMannschaft; }
             set { SetProperty<Mannschaft>(ref _neueMannschaft, value); }
         }
+
+        private Mannschaft _selectedMannschaft;
+        public Mannschaft SelectedMannschaft
+        {
+            get { return _selectedMannschaft; }
+            set {SetProperty<Mannschaft> (ref _selectedMannschaft , value); }
+        }
+
+        private List<int> _correctAnswers;
+
+        public List<int> CorrectAnswers
+        {
+            get { return _correctAnswers; }
+            set {SetProperty<List<int>> (ref _correctAnswers , value); }
+        }
+
+
 
         #endregion
 

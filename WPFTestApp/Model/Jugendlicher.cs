@@ -39,6 +39,15 @@ namespace WPFTestApp.Model
             set {SetProperty<DateTime?> (ref _ageInYears , value); }
         }
 
+        private int _punkteFragebogen;
+
+        public int PunkteFragebogen
+        {
+            get { return _punkteFragebogen; }
+            set { _punkteFragebogen = value; }
+        }
+
+
         private int _ageYears;
 
         public int AgeYears
@@ -64,6 +73,8 @@ namespace WPFTestApp.Model
             
             return _ageInYears;
         }
+
+
 
     }
 }
