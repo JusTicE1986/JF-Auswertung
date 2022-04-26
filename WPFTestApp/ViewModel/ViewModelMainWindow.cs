@@ -17,6 +17,7 @@ namespace WPFTestApp.ViewModel
             NeueMannschaftHinzu = new RelayCommands(NeueMannschaftHinzuExecute, NeueMannschaftHinzuCanExecute);
             MannschaftEntfernen = new RelayCommands(MannschaftEntfernenExecute, MannschaftEntfernenCanExecute);
             JugendlicherEntfernen = new RelayCommands(JugendlicherEntfernenExecute, JugendlicherEntfernenCanExecute);
+            DummyHinzufügen = new RelayCommands(DummyMannschaftExecute, DummyMannschaftCanExecute);
 
             // Werte für die Combobox cmb_MannschaftsArt
             MannschaftsArt = new List<string>() { "Gruppe", "Staffel"};
@@ -39,6 +40,7 @@ namespace WPFTestApp.ViewModel
         public ICommand NeueMannschaftHinzu { get; private set; }
         public ICommand MannschaftEntfernen { get; private set; }
         public ICommand JugendlicherEntfernen { get; private set; }
+        public ICommand DummyHinzufügen { get; private set; }
 
         #endregion
 
@@ -93,6 +95,57 @@ namespace WPFTestApp.ViewModel
         #endregion
 
         #region Methoden
+
+        private bool DummyMannschaftCanExecute(object sender) { return true; }
+        private void DummyMannschaftExecute(object sender) 
+        {
+            Team = new ObservableCollection<Mannschaft>();
+
+            Jugendlicher _jugendlicher1 = new Jugendlicher();
+            _jugendlicher1.FirstName = "Andreas";
+            _jugendlicher1.LastName = "Neumann";
+            _jugendlicher1.GeburtsDatum = new System.DateTime(1986, 03, 16);
+            _jugendlicher1.AgeYears = _jugendlicher1.CalculateAgeInYears();
+
+            Jugendlicher _jugendlicher2 = new Jugendlicher();
+            _jugendlicher2.FirstName = "Elisabeth";
+            _jugendlicher2.LastName = "Neumann";
+            _jugendlicher2.GeburtsDatum = new System.DateTime(1995, 08, 27);
+            _jugendlicher2.AgeYears = _jugendlicher2.CalculateAgeInYears();
+
+            Jugendlicher _jugendlicher3 = new Jugendlicher();
+            _jugendlicher3.FirstName = "Steven";
+            _jugendlicher3.LastName = "Henning";
+            _jugendlicher3.GeburtsDatum = new System.DateTime(1984, 11, 07);
+            _jugendlicher3.AgeYears = _jugendlicher3.CalculateAgeInYears();
+
+            Jugendlicher _jugendlicher4 = new Jugendlicher();
+            _jugendlicher4.FirstName = "Daniel";
+            _jugendlicher4.LastName = "Fischer";
+            _jugendlicher4.GeburtsDatum = new System.DateTime(1983, 02, 20);
+            _jugendlicher4.AgeYears = _jugendlicher4.CalculateAgeInYears();
+
+            Jugendlicher _jugendlicher5 = new Jugendlicher();
+            _jugendlicher5.FirstName = "Michael";
+            _jugendlicher5.LastName = "Fischer";
+            _jugendlicher5.GeburtsDatum = new System.DateTime(1981, 06, 10);
+            _jugendlicher5.AgeYears = _jugendlicher5.CalculateAgeInYears();
+
+            Jugendlicher _jugendlicher6 = new Jugendlicher();
+            _jugendlicher6.FirstName = "Maria";
+            _jugendlicher6.LastName = "Gerhard";
+            _jugendlicher6.GeburtsDatum = new System.DateTime(2001, 04, 01);
+            _jugendlicher6.AgeYears = _jugendlicher6.CalculateAgeInYears();
+
+            var _dummyMannschaft = new Mannschaft("Vasbeck", "Staffel", false);
+            _dummyMannschaft.Add(_jugendlicher1);
+            _dummyMannschaft.Add(_jugendlicher2);
+            _dummyMannschaft.Add(_jugendlicher3);
+            _dummyMannschaft.Add(_jugendlicher4);
+            _dummyMannschaft.Add(_jugendlicher5);
+            _dummyMannschaft.Add(_jugendlicher6);
+            Team.Add(_dummyMannschaft);
+        }
 
         private bool NeuerJugendlicherHinzuCanExecute(object sender)
         {
