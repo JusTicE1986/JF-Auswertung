@@ -66,6 +66,7 @@
       <DependentUpon>MannschaftHinzufügen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Fragebogen.cs" />
+    <Compile Include="Model\TeenWrapper.cs" />
     <Compile Include="ViewModel\ViewModelMainWindow.cs" />
     <Page Include="ErgebnisseFragebögen.xaml">
       <SubType>Designer</SubType>

@@ -30,11 +30,11 @@ namespace WPFTestApp.Model
             set {SetProperty<string> (ref _mannschaftName , value); }
         }
 
-        private ObservableCollection<Jugendlicher> _listOfJugendliche;
-        public ObservableCollection<Jugendlicher> ListOfJugendliche
+        private ObservableCollection<TeenWrapper> _listOfJugendliche;
+        public ObservableCollection<TeenWrapper> ListOfJugendliche
         {
             get { return _listOfJugendliche; }
-            set { SetProperty<ObservableCollection<Jugendlicher>> (ref _listOfJugendliche , value); }
+            set { SetProperty<ObservableCollection<TeenWrapper>> (ref _listOfJugendliche , value); }
         }
         
         private string _mannschaftsArt;
@@ -64,18 +64,19 @@ namespace WPFTestApp.Model
                 return false;
 
             if (ListOfJugendliche == null)
-                ListOfJugendliche = new ObservableCollection<Jugendlicher>();
+                ListOfJugendliche = new ObservableCollection<TeenWrapper>();
 
             #endregion
 
-            if (ListOfJugendliche.Contains(_jugendlicher) == false)
-                ListOfJugendliche.Add(_jugendlicher);
+            TeenWrapper wrapper = new TeenWrapper();
+            wrapper.Teen = _jugendlicher;
+            ListOfJugendliche.Add(wrapper);
 
             return true;
         }
 
         public bool
-            Remove(Jugendlicher _jugendlicher)
+            Remove(TeenWrapper _jugendlicher)
         {
             #region safety
 
@@ -86,7 +87,7 @@ namespace WPFTestApp.Model
                 return false;
 
             #endregion
-
+            
             return ListOfJugendliche.Remove(_jugendlicher);
         }
 

@@ -30,7 +30,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <TextBlock Text="Punkte: " VerticalAlignment="Center"/>
-                                <ComboBox Width="100" Padding="2" SelectedValuePath="{Binding PunkteFragebogen}" HorizontalContentAlignment="Center" ItemsSource="{Binding CorrectAnswers}">
+                                <ComboBox Width="100" Padding="2" SelectedValue="{Binding Path=PunkteFragebogen}" HorizontalContentAlignment="Center">
                                 </ComboBox>
                             </StackPanel>
                         </DataTemplate>

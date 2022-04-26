@@ -22,13 +22,6 @@ namespace WPFTestApp.ViewModel
             // Werte für die Combobox cmb_MannschaftsArt
             MannschaftsArt = new List<string>() { "Gruppe", "Staffel"};
 
-            CorrectAnswers = new List<int>();
-
-            for (int i = 0; i < 16; i++)
-            {
-                CorrectAnswers.Add(i);
-            }
-
             //first time init
             NeueMannschaft = new Mannschaft();
             NeuerJugendlicher = new Jugendlicher();            
@@ -83,7 +76,6 @@ namespace WPFTestApp.ViewModel
         }
 
         private List<int> _correctAnswers;
-
         public List<int> CorrectAnswers
         {
             get { return _correctAnswers; }
@@ -96,6 +88,7 @@ namespace WPFTestApp.ViewModel
         #region Methoden
 
         private bool DummyMannschaftCanExecute(object sender) { return true; }
+     
         private void DummyMannschaftExecute(object sender) 
         {
             Team = new ObservableCollection<Mannschaft>();
@@ -145,6 +138,7 @@ namespace WPFTestApp.ViewModel
             _dummyMannschaft.Add(_jugendlicher6);
             Team.Add(_dummyMannschaft);
         }
+
 
         private bool NeuerJugendlicherHinzuCanExecute(object sender)
         {
@@ -233,7 +227,8 @@ namespace WPFTestApp.ViewModel
 
             #endregion
 
-            var _jugendlicher = sender as Jugendlicher;
+            var _jugendlicher = sender as TeenWrapper;
+            
             if (_jugendlicher != null)
                 NeueMannschaft.ListOfJugendliche.Remove(_jugendlicher);
 
@@ -276,6 +271,7 @@ namespace WPFTestApp.ViewModel
             /* reset dummy */
             NeueMannschaft = new Mannschaft();
         }
+
 
         private bool MannschaftEntfernenCanExecute(object sender) 
         {
