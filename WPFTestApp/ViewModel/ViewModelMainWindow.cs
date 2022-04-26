@@ -91,7 +91,6 @@ namespace WPFTestApp.ViewModel
         }
 
 
-
         #endregion
 
         #region Methoden
@@ -277,7 +276,6 @@ namespace WPFTestApp.ViewModel
             /* reset dummy */
             NeueMannschaft = new Mannschaft();
         }
-       
 
         private bool MannschaftEntfernenCanExecute(object sender) 
         {
