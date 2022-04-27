@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using WPFTestApp.Base;
 
 namespace WPFTestApp.Model
@@ -51,6 +52,15 @@ namespace WPFTestApp.Model
             set {SetProperty<bool> (ref _isOutOfCompetition , value); }
         }
 
+        private int _averageAge;
+
+        public int AverageAge
+        {
+            get { return _averageAge; }
+            set {SetProperty<int> (ref _averageAge , value); }
+        }
+
+
         #endregion
 
         #region methods
@@ -99,6 +109,40 @@ namespace WPFTestApp.Model
             else
                 return ListOfJugendliche.Count;
         }
+
+        public int Calculate_PointsFragebogen()
+        {
+            int TotalPoints = 0;
+            if (ListOfJugendliche != null)
+            {
+                foreach (var item in ListOfJugendliche)
+                {
+                    TotalPoints += item.PunkteFragebogen;
+                   
+                }
+            }
+            return TotalPoints * 5;
+        }
+
+        public int Get_AverageAge()
+        {
+            AverageAge = 0;
+            if (ListOfJugendliche == null) return 0;
+            foreach (var item in ListOfJugendliche)
+            {
+                AverageAge += item.Teen.AgeYears;
+            }
+
+            switch (MannschaftsArt)
+            {
+                case "Gruppe":
+                    return AverageAge / 9;
+                case "Staffel": 
+                    return AverageAge / 6;
+                default: return 0;
+            }
+        }
+
 
         #endregion
     }

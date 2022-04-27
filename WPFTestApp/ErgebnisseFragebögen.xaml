@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<UserControl x:Name="UC_Fragebogen"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,23 +19,28 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.ColumnSpan="2" Content="ERGEBNISSE FRAGEBÖGEN" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
         <ComboBox Grid.Row="1" ItemsSource="{Binding Team}" DisplayMemberPath="MannschaftName" SelectedItem="{Binding SelectedMannschaft}" Margin="2"/>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding SelectedMannschaft.ListOfJugendliche}"
-                  AutoGenerateColumns="False" Margin="2" CanUserAddRows="False">
+        <Button Grid.Row="1" Grid.Column="1" Width="150" Content="Punkte berechnen" Command="{Binding FragebogenBerechnen}"/>
+       
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" AutoGenerateColumns="False" Margin="2" CanUserAddRows="False"
+                  ItemsSource="{Binding SelectedMannschaft.ListOfJugendliche}">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Vorname" Binding="{Binding FirstName}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Nachname" Binding="{Binding LastName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Vorname" Binding="{Binding Teen.FirstName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nachname" Binding="{Binding Teen.LastName}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Anzahl richtige Antworten" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <TextBlock Text="Punkte: " VerticalAlignment="Center"/>
-                                <ComboBox Width="100" Padding="2" SelectedValue="{Binding Path=PunkteFragebogen}" HorizontalContentAlignment="Center">
+                                <ComboBox Width="100" Padding="2" HorizontalContentAlignment="Center"
+                                          ItemsSource="{Binding ElementName=UC_Fragebogen, Path=DataContext.ListOfPoints, Mode=OneWay}"
+                                          SelectedItem="{Binding Path= PunkteFragebogen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  >
                                 </ComboBox>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Punkte Fragebogen" Binding="{Binding CalculatedFragebogen, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

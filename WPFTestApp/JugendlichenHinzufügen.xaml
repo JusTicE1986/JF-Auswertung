@@ -48,11 +48,11 @@
 
                 <DataGrid x:Name="dgAddedMembers" Grid.Column="1" Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding ElementName=TeamSelectCB, Path=SelectedItem.ListOfJugendliche}" AutoGenerateColumns="False" Margin="2" CanUserDeleteRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Vorname" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="Vorname" Binding="{Binding Teen.FirstName}"/>
 
-                        <DataGridTextColumn Header="Nachname" Binding="{Binding LastName}"/>
-                        <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding GeburtsDatum}" />
-                        <DataGridTextColumn Header="Alter n. Jahrgang" Binding="{Binding AgeYears}"/>
+                        <DataGridTextColumn Header="Nachname" Binding="{Binding Teen.LastName}"/>
+                        <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding Teen.GeburtsDatum}" />
+                        <DataGridTextColumn Header="Alter n. Jahrgang" Binding="{Binding Teen.AgeYears}"/>
                     </DataGrid.Columns>
                 </DataGrid>
 

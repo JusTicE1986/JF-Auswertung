@@ -56,6 +56,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\CommandJugendlicherHinzu.cs" />
+    <Compile Include="ErgebnisseATeil.xaml.cs">
+      <DependentUpon>ErgebnisseATeil.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ErgebnisseFragebögen.xaml.cs">
       <DependentUpon>ErgebnisseFragebögen.xaml</DependentUpon>
     </Compile>
@@ -65,9 +68,14 @@
     <Compile Include="MannschaftHinzufügen.xaml.cs">
       <DependentUpon>MannschaftHinzufügen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ATeil.cs" />
     <Compile Include="Model\Fragebogen.cs" />
     <Compile Include="Model\TeenWrapper.cs" />
     <Compile Include="ViewModel\ViewModelMainWindow.cs" />
+    <Page Include="ErgebnisseATeil.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ErgebnisseFragebögen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

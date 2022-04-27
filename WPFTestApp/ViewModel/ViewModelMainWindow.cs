@@ -18,9 +18,11 @@ namespace WPFTestApp.ViewModel
             MannschaftEntfernen = new RelayCommands(MannschaftEntfernenExecute, MannschaftEntfernenCanExecute);
             JugendlicherEntfernen = new RelayCommands(JugendlicherEntfernenExecute, JugendlicherEntfernenCanExecute);
             DummyHinzufügen = new RelayCommands(DummyMannschaftExecute, DummyMannschaftCanExecute);
+            FragebogenBerechnen = new RelayCommands(PunkteFragebogenBerechenenExecute, PunkteFragebogenBerechenenCanExecute);
 
             // Werte für die Combobox cmb_MannschaftsArt
             MannschaftsArt = new List<string>() { "Gruppe", "Staffel"};
+            ListOfPoints = new List<int>() {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 
             //first time init
             NeueMannschaft = new Mannschaft();
@@ -34,6 +36,7 @@ namespace WPFTestApp.ViewModel
         public ICommand MannschaftEntfernen { get; private set; }
         public ICommand JugendlicherEntfernen { get; private set; }
         public ICommand DummyHinzufügen { get; private set; }
+        public ICommand FragebogenBerechnen { get; private set; }
 
         #endregion
 
@@ -75,11 +78,11 @@ namespace WPFTestApp.ViewModel
             set {SetProperty<Mannschaft> (ref _selectedMannschaft , value); }
         }
 
-        private List<int> _correctAnswers;
-        public List<int> CorrectAnswers
+        private List<int> _listOfPoints;
+        public List<int> ListOfPoints
         {
-            get { return _correctAnswers; }
-            set {SetProperty<List<int>> (ref _correctAnswers , value); }
+            get { return _listOfPoints; }
+            set { _listOfPoints = value; }
         }
 
 
@@ -294,7 +297,16 @@ namespace WPFTestApp.ViewModel
             if (_mannschaft != null)
                 Team.Remove(_mannschaft);
         }
+
         
+        private bool PunkteFragebogenBerechenenCanExecute(object sender) { return true; }
+       
+        private void PunkteFragebogenBerechenenExecute(object sender)
+        {
+
+            MessageBox.Show(SelectedMannschaft.Calculate_PointsFragebogen().ToString());
+        }
+
         #endregion
     }
 }
