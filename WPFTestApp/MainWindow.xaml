@@ -1,55 +1,49 @@
-﻿<Window x:Class="WPFTestApp.MainWindow"
+﻿<mah:MetroWindow x:Class="WPFTestApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTestApp" 
         xmlns:vm="clr-namespace:WPFTestApp.ViewModel"
-        mc:Ignorable="d"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"                 
         Title="Jugendfeuerwehr Auswertung" 
-        Height="1024" Width="1500" 
-        WindowState="Maximized" 
-        ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen"
+        GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+        Background="White"
+        Width="800"
+        SizeToContent="Height">
     
     <Window.DataContext>
         <vm:ViewModelMainWindow/>
     </Window.DataContext>
+   
+    <mah:MetroAnimatedSingleRowTabControl Margin="20" FontSize="12" 
+                                          mah:HeaderedControlHelper.HeaderFontWeight="SemiBold" 
+                                          mah:HeaderedControlHelper.HeaderFontSize="16"                                           
+                                          mah:TabControlHelper.UnderlineSelectedBrush="#FF7DA8E1" 
+                                          mah:TabControlHelper.UnderlinePlacement="Bottom">
+        <TabItem Header="Wettbewerb erstellen">
+            <local:Wettbewerb Margin="0,20,0,0" Height="130"/>
+        </TabItem>
+        <TabItem Header="1. Mannschaft erstellen" IsSelected="True">
+            <local:MannschaftHinzufügen Margin="0,20,0,0" Height="510"/>
+        </TabItem>
+       
+        <TabItem Header="2. Jugendliche hinzufügen">
+            <local:JugendlichenHinzufügen Margin="0,20,0,0" Height="510"/>
+        </TabItem>
+
+        <TabItem Header="3. Ergebnisse erfassen">
+            <local:UC_ErgebnisseErfassen Margin="0,20,0,0" Height="510"/>
+        </TabItem>
+
+        <TabItem Header="4. Übersicht">
+            <Grid Margin="0,20,0,0" Height="510">
+                <TextBlock Text="Hallo Andreas :)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
+            </Grid>
+        </TabItem>
+
+    </mah:MetroAnimatedSingleRowTabControl>
     
-    <Grid>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!--#region new team -->
-
-        <local:MannschaftHinzufügen Grid.Column="0" Grid.Row="0" Margin="10"/>
-
-        <!--#endregion-->
-        
-        <!--#region new teen -->
-
-        <local:JugendlichenHinzufügen Grid.Column="1" Grid.Row="0" Margin="10"/>
-
-        <!--#endregion-->
-        
-        <!--#region Fragebögen UserControl-->
-        <local:ErgebnisseFragebögen Grid.Column="2" Grid.Row="0" Margin="10"/>
-        <!--#endregion-->
-
-
-        <!--#region A-Teil UserControl-->
-        <local:ErgebnisseATeil Grid.Column="2" Grid.Row="1" Margin="10"/>
-        <!--#endregion-->
-        
-
-        <Button Grid.Column="0" Grid.Row="1" Command="{Binding DummyHinzufügen}" Height="30" Width="150" Content="Dummy hinzufügen"/>
-
-    </Grid>
-</Window>
+</mah:MetroWindow>

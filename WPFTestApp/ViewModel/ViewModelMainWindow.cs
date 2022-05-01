@@ -5,11 +5,18 @@ using WPFTestApp.Base;
 using WPFTestApp.Commands;
 using System.Windows.Input;
 using System.Windows;
+using System;
+using System.Linq;
 
 namespace WPFTestApp.ViewModel
 {
     public class ViewModelMainWindow : BindableBase        
-    {      
+    {
+        public enum UebungsartEnum
+        {
+            offenesGewässer,
+            Unterflurhydrant
+        }
         public ViewModelMainWindow()
         {
             // Initialisierung des RelayCommands
@@ -23,7 +30,9 @@ namespace WPFTestApp.ViewModel
             // Werte für die Combobox cmb_MannschaftsArt
             MannschaftsArt = new List<string>() { "Gruppe", "Staffel"};
             ListOfPoints = new List<int>() {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-
+            
+            var _list = Enum.GetValues(typeof(UebungsartEnum)).Cast<UebungsartEnum>();
+            UebungsArten = new List<UebungsartEnum>(_list);
             //first time init
             NeueMannschaft = new Mannschaft();
             NeuerJugendlicher = new Jugendlicher();            
@@ -41,6 +50,7 @@ namespace WPFTestApp.ViewModel
         #endregion
 
         #region Properties
+            #region Mannschaftsdaten
 
         private ObservableCollection<Mannschaft> _team;
         public ObservableCollection<Mannschaft> Team
@@ -84,7 +94,41 @@ namespace WPFTestApp.ViewModel
             get { return _listOfPoints; }
             set { _listOfPoints = value; }
         }
+        #endregion
 
+            #region Wettbewerbsdaten
+        private string _austragungsOrt;
+
+        public string AustragungsOrt
+        {
+            get { return _austragungsOrt; }
+            set { SetProperty<string>(ref _austragungsOrt, value); }
+        }
+
+        private DateTime? _aktuellesDatum;
+
+        public DateTime? AktuellesDatum
+        {
+            get { return _aktuellesDatum; }
+            set { _aktuellesDatum = value; }
+        }
+        private List<UebungsartEnum> _uebungsArten;
+
+        public List<UebungsartEnum> UebungsArten
+        {
+            get { return _uebungsArten; }
+            set { SetProperty<List<UebungsartEnum>>(ref _uebungsArten, value); }
+        }
+
+        private UebungsartEnum _uebungsArt;
+
+        public UebungsartEnum UebungsArt
+        {
+            get { return _uebungsArt; }
+            set {SetProperty<UebungsartEnum> (ref _uebungsArt , value); }
+        }
+
+        #endregion
 
         #endregion
 
@@ -94,51 +138,59 @@ namespace WPFTestApp.ViewModel
      
         private void DummyMannschaftExecute(object sender) 
         {
-            Team = new ObservableCollection<Mannschaft>();
+            if (Team == null)
+                Team = new ObservableCollection<Mannschaft>();
+
+            var _random = new Random();
+            var _region = new List<string>() { "Lippstadt", "Hannover", "Berlin", "Esbeck", "Mantinghausen", "Ilsede" };
+            var _type = new List<string>() { "Staffel", "Gruppe" };
+            var _bool = new List<bool>() { true, false, true, false, true, false, true, false };
 
             Jugendlicher _jugendlicher1 = new Jugendlicher();
             _jugendlicher1.FirstName = "Andreas";
             _jugendlicher1.LastName = "Neumann";
-            _jugendlicher1.GeburtsDatum = new System.DateTime(1986, 03, 16);
+            _jugendlicher1.GeburtsDatum = new System.DateTime(2010, 03, 16);
             _jugendlicher1.AgeYears = _jugendlicher1.CalculateAgeInYears();
 
             Jugendlicher _jugendlicher2 = new Jugendlicher();
             _jugendlicher2.FirstName = "Elisabeth";
             _jugendlicher2.LastName = "Neumann";
-            _jugendlicher2.GeburtsDatum = new System.DateTime(1995, 08, 27);
+            _jugendlicher2.GeburtsDatum = new System.DateTime(2005, 08, 27);
             _jugendlicher2.AgeYears = _jugendlicher2.CalculateAgeInYears();
 
             Jugendlicher _jugendlicher3 = new Jugendlicher();
             _jugendlicher3.FirstName = "Steven";
             _jugendlicher3.LastName = "Henning";
-            _jugendlicher3.GeburtsDatum = new System.DateTime(1984, 11, 07);
+            _jugendlicher3.GeburtsDatum = new System.DateTime(2008, 11, 07);
             _jugendlicher3.AgeYears = _jugendlicher3.CalculateAgeInYears();
 
             Jugendlicher _jugendlicher4 = new Jugendlicher();
             _jugendlicher4.FirstName = "Daniel";
             _jugendlicher4.LastName = "Fischer";
-            _jugendlicher4.GeburtsDatum = new System.DateTime(1983, 02, 20);
+            _jugendlicher4.GeburtsDatum = new System.DateTime(2012, 02, 20);
             _jugendlicher4.AgeYears = _jugendlicher4.CalculateAgeInYears();
 
             Jugendlicher _jugendlicher5 = new Jugendlicher();
             _jugendlicher5.FirstName = "Michael";
             _jugendlicher5.LastName = "Fischer";
-            _jugendlicher5.GeburtsDatum = new System.DateTime(1981, 06, 10);
+            _jugendlicher5.GeburtsDatum = new System.DateTime(2008, 06, 10);
             _jugendlicher5.AgeYears = _jugendlicher5.CalculateAgeInYears();
 
             Jugendlicher _jugendlicher6 = new Jugendlicher();
             _jugendlicher6.FirstName = "Maria";
             _jugendlicher6.LastName = "Gerhard";
-            _jugendlicher6.GeburtsDatum = new System.DateTime(2001, 04, 01);
+            _jugendlicher6.GeburtsDatum = new System.DateTime(2009, 04, 01);
             _jugendlicher6.AgeYears = _jugendlicher6.CalculateAgeInYears();
 
-            var _dummyMannschaft = new Mannschaft("Vasbeck", "Staffel", false);
+            var _dummyMannschaft = new Mannschaft(_region[_random.Next(0,_region.Count-1)], _type[_random.Next(0, _type.Count)], _bool[_random.Next(0,_bool.Count)]);
             _dummyMannschaft.Add(_jugendlicher1);
             _dummyMannschaft.Add(_jugendlicher2);
             _dummyMannschaft.Add(_jugendlicher3);
             _dummyMannschaft.Add(_jugendlicher4);
             _dummyMannschaft.Add(_jugendlicher5);
             _dummyMannschaft.Add(_jugendlicher6);
+            _dummyMannschaft.AverageAge = _dummyMannschaft.Get_AverageAge();
+            _dummyMannschaft.VorgabePunkte = _dummyMannschaft.Get_Vorgabepunkte();
             Team.Add(_dummyMannschaft);
         }
 
@@ -269,8 +321,11 @@ namespace WPFTestApp.ViewModel
                 = new Mannschaft(NeueMannschaft);
             
             /* add new team */
-            Team.Add(_mannschaft);
             
+            _mannschaft.AverageAge = _mannschaft.Get_AverageAge();
+            _mannschaft.VorgabePunkte = _mannschaft.Get_Vorgabepunkte();
+            Team.Add(_mannschaft);
+
             /* reset dummy */
             NeueMannschaft = new Mannschaft();
         }
@@ -303,9 +358,9 @@ namespace WPFTestApp.ViewModel
        
         private void PunkteFragebogenBerechenenExecute(object sender)
         {
-
-            MessageBox.Show(SelectedMannschaft.Calculate_PointsFragebogen().ToString());
+            SelectedMannschaft.TotalPointsFragebogen = SelectedMannschaft.Get_PointsOfFragebogen();
         }
+
 
         #endregion
     }

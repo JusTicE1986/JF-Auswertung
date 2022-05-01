@@ -4,25 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFTestApp"
-             xmlns:ViewModel="clr-namespace:WPFTestApp.ViewModel" x:Class="WPFTestApp.ErgebnisseFragebögen"
+             xmlns:ViewModel="clr-namespace:WPFTestApp.ViewModel" 
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             x:Class="WPFTestApp.ErgebnisseFragebögen"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignWidth="800"
+             Background="White">
+
     <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="1.5*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="ERGEBNISSE FRAGEBÖGEN" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
-        <ComboBox Grid.Row="1" ItemsSource="{Binding Team}" DisplayMemberPath="MannschaftName" SelectedItem="{Binding SelectedMannschaft}" Margin="2"/>
-        <Button Grid.Row="1" Grid.Column="1" Width="150" Content="Punkte berechnen" Command="{Binding FragebogenBerechnen}"/>
-       
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" AutoGenerateColumns="False" Margin="2" CanUserAddRows="False"
-                  ItemsSource="{Binding SelectedMannschaft.ListOfJugendliche}">
+
+        <TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="22" Typography.Capitals="AllSmallCaps" Foreground="LightGray" FontWeight="SemiBold"
+                   Text="ERGEBNISSE FRAGEBOGEN"/>
+
+        <DataGrid Grid.Row="1" MinHeight="100" AutoGenerateColumns="False" Margin="20,0" CanUserAddRows="False"
+                  Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                  ItemsSource="{Binding SelectedMannschaft.ListOfJugendliche}" >
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Vorname" Binding="{Binding Teen.FirstName}" IsReadOnly="True"/>
@@ -40,8 +41,13 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Punkte Fragebogen" Binding="{Binding CalculatedFragebogen, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Punkte Fragebogen" Binding="{Binding CalculatedFragebogen, UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True" CanUserReorder="False"/>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label Content="Punkte im Fragebogen:"/>
+            <Label Content="{Binding SelectedMannschaft.TotalPointsFragebogen}"/>
+
+        </StackPanel>
     </Grid>
 </UserControl>

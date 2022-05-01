@@ -14,8 +14,8 @@
                 CalculatedFragebogen = _punkteFragebogen * 5;
             }
         }
+       
         private int _calculatedFragebogen;
-
         public int CalculatedFragebogen
         {
             get { return _calculatedFragebogen; }

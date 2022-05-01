@@ -4,44 +4,66 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFTestApp"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignWidth="800"
+             Background="White">
+
     <Grid>
-        <Grid Margin="10" Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.55*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="0.5*"/>
-            </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="260"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="MANNSCHAFT HINZUFÜGEN" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="Mannschaftsname:" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NeueMannschaft.MannschaftName, Mode=TwoWay}" Margin="2"/>
-            <Label Grid.Row="2" Grid.Column="0" Content="Mannschaftsart:" HorizontalContentAlignment="Right"/>
-            <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding MannschaftsArt}" SelectedItem="{Binding NeueMannschaft.MannschaftsArt, FallbackValue=Gruppe}" HorizontalContentAlignment="Center" Margin="2"/>
-            <Label Grid.Row="3" Grid.Column="0" Content="Besonderheit:" HorizontalContentAlignment="Right"/>
-            <CheckBox Grid.Row="3" Grid.Column="1" Content="Außer Konkurrenz" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding NeueMannschaft.IsOutOfCompetition}"/>
 
-            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Right">
-                <Button Content="Mannschaft hinzufügen" Command="{Binding NeueMannschaftHinzu}" Margin="2"/>
-                <Button Content="Mannschaft entfernen" Command="{Binding MannschaftEntfernen}" CommandParameter="{Binding ElementName=dgTeam, Path=SelectedItem}" Margin="2"/>
-            </StackPanel>
+        <Label Grid.Row="1" Grid.Column="0" Content="Neuer Mannschaftsname:" HorizontalContentAlignment="Right"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="2"
+                 mah:TextBoxHelper.ClearTextButton="True"
+                 Text="{Binding NeueMannschaft.MannschaftName, Mode=TwoWay}"/>
+        
+        <Label Grid.Row="2" Grid.Column="0" Content="Mannschaftsart:" HorizontalContentAlignment="Right"/>
+        <ComboBox Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" Margin="2"
+                  ItemsSource="{Binding MannschaftsArt}" 
+                  SelectedItem="{Binding NeueMannschaft.MannschaftsArt, FallbackValue=Gruppe}"/>
+        
+        <Label Grid.Row="3" Grid.Column="0" Content="Besonderheit:" HorizontalContentAlignment="Right"/>
+        <CheckBox Grid.Row="3" Grid.Column="1" Height="26" Content="Außer Konkurrenz" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding NeueMannschaft.IsOutOfCompetition}"/>
 
-            <DataGrid x:Name="dgTeam" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" IsReadOnly="True"  AutoGenerateColumns="False" Margin="2" ItemsSource="{Binding Team}" CanUserAddRows="False">
-                <DataGrid.Columns >
-                    <DataGridTextColumn Width="0.6*" Header="Bekannte Teams" Binding="{Binding MannschaftName}"/>
-                    <DataGridTextColumn Width="0.3*" Header="Kategorie" Binding="{Binding MannschaftsArt}"/>
-                    <DataGridTextColumn Width="0.3*" Header="Außer Konkurrenz" Binding="{Binding IsOutOfCompetition}"/>
-                    <DataGridTextColumn Width="0.3*" Header="Teilnehmer" Binding="{Binding ListOfJugendliche.Count, FallbackValue=0}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
+        <Label Grid.Row="4" Height="26" Content=""/>
+
+        <Button Grid.Row="5" Content="Mannschaft hinzufügen" Grid.Column="1" HorizontalAlignment="Right" Command="{Binding NeueMannschaftHinzu}" Margin="0,10"/>
+
+        <TextBlock Grid.Row="6" Margin="0,10"  Grid.ColumnSpan="2" VerticalAlignment="Center" FontSize="22" Typography.Capitals="AllSmallCaps" Foreground="#CC0078D7" FontWeight="SemiBold">
+            <Run Text="{Binding Mode=OneWay, Path=Team.Count, StringFormat={}BEKANNTE MANNSCHAFTEN ({0}), FallbackValue=KEINE BEKANNTEN MANNSCHAFTEN VORHANDEN}"/>
+        </TextBlock>
+
+        <DataGrid Grid.Row="7" x:Name="dgTeam" Margin="20,0" Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True"  AutoGenerateColumns="False" CanUserAddRows="False" 
+                  Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                  ItemsSource="{Binding Team}">
+            <DataGrid.Columns >
+                <DataGridTextColumn Width="0.6*" Header="Name" Binding="{Binding MannschaftName}"/>
+                <DataGridTextColumn Width="0.3*" Header="Kategorie" Binding="{Binding MannschaftsArt}"/>
+                <DataGridTextColumn Width="0.3*" Header="Außer Konkurrenz" Binding="{Binding IsOutOfCompetition}"/>
+                <DataGridTextColumn Width="0.3*" Header="Teilnehmer" Binding="{Binding ListOfJugendliche.Count, FallbackValue=0}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="8" Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="2">
+            <Button Command="{Binding DummyHinzufügen}"  Content="Dummy hinzufügen" Margin="2"/>
+            <Button Content="Mannschaft entfernen" Command="{Binding MannschaftEntfernen}" CommandParameter="{Binding ElementName=dgTeam, Path=SelectedItem}" Margin="2"/>
+        </StackPanel>
+
     </Grid>
+
 </UserControl>

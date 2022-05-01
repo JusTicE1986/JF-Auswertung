@@ -4,59 +4,72 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFTestApp"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignWidth="800"
+             Background="White">
+
     <Grid>
-        <Grid Margin="10" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.55*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Content="JUGENDLICHEN HINZUFÜGEN" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="Hinzufügen zu Team:" HorizontalContentAlignment="Right"/>
-            <Label Grid.Row="2" Grid.Column="0" Content="Vorname:" HorizontalContentAlignment="Right"/>
-            <Label Grid.Row="3" Grid.Column="0" Content="Nachname:" HorizontalContentAlignment="Right"/>
-            <Label Grid.Row="4" Grid.Column="0" Content="Geburtsdatum:" HorizontalContentAlignment="Right"/>
-
-            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="TeamSelectCB" ItemsSource="{Binding Team}" DisplayMemberPath="MannschaftName" Margin="2"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NeuerJugendlicher.FirstName}" Margin="2"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NeuerJugendlicher.LastName}" Margin="2"/>
-            <DatePicker Grid.Row="4" Grid.Column="1" Text="{Binding NeuerJugendlicher.GeburtsDatum, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ConverterCulture=de-DE}" Margin="2"/>
-
-            <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button  Content="Teilnehmer hinzufügen" Command="{Binding NeuerJugendlicherHinzu}" CommandParameter="{Binding ElementName=TeamSelectCB, Path=SelectedItem}" Margin="2"/>
-                <Button  Content="Teilnehmer entfernen" Command="{Binding JugendlicherEntfernen}" CommandParameter="{Binding ElementName=dgAddedMembers, Path=SelectedItem}" Margin="2"/>
-            </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="260"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
 
-            <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="ANGELEGTE JUGENDLICHE" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Hinzufügen zu Team:" HorizontalContentAlignment="Right"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" x:Name="TeamSelectCB" ItemsSource="{Binding Team}" DisplayMemberPath="MannschaftName" Margin="2"/>
 
-                <DataGrid x:Name="dgAddedMembers" Grid.Column="1" Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding ElementName=TeamSelectCB, Path=SelectedItem.ListOfJugendliche}" AutoGenerateColumns="False" Margin="2" CanUserDeleteRows="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Vorname" Binding="{Binding Teen.FirstName}"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Vorname:" HorizontalContentAlignment="Right"/>
+        <TextBox Grid.Row="2" Grid.Column="1"  Margin="2"
+                 mah:TextBoxHelper.ClearTextButton="True" 
+                 Text="{Binding NeuerJugendlicher.FirstName}"/>
 
-                        <DataGridTextColumn Header="Nachname" Binding="{Binding Teen.LastName}"/>
-                        <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding Teen.GeburtsDatum}" />
-                        <DataGridTextColumn Header="Alter n. Jahrgang" Binding="{Binding Teen.AgeYears}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+        <Label Grid.Row="3" Grid.Column="0" Content="Nachname:" HorizontalContentAlignment="Right"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="2"
+                 mah:TextBoxHelper.ClearTextButton="True"
+                 Text="{Binding NeuerJugendlicher.LastName}" />
 
-            </Grid>
-        </Grid>
+        <Label Grid.Row="4" Grid.Column="0" Content="Geburtsdatum:" HorizontalContentAlignment="Right"/>
+        <DatePicker Grid.Row="4" Grid.Column="1" Text="{Binding NeuerJugendlicher.GeburtsDatum, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ConverterCulture=de-DE}" Margin="2"/>
+
+        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,10"
+                    Content="Teilnehmer hinzufügen" 
+                    Command="{Binding NeuerJugendlicherHinzu}" 
+                    CommandParameter="{Binding ElementName=TeamSelectCB, Path=SelectedItem}" />
+
+        <TextBlock Grid.Row="6" Margin="0,10" Grid.ColumnSpan="2" VerticalAlignment="Center" FontSize="22" Typography.Capitals="AllSmallCaps" Foreground="#CC0078D7">
+                    <Run Text="{Binding Mode=OneWay, ElementName=TeamSelectCB, Path=SelectedItem.MannschaftName, StringFormat={}TEILNEHMER TEAM {0}, FallbackValue=KEIN TEAM AUSGEWÄHLT}" FontWeight="SemiBold" />
+                    <Run Text="{Binding Mode=OneWay, ElementName=TeamSelectCB, Path=SelectedItem.ListOfJugendliche.Count, StringFormat={}({0})}" FontWeight="Normal"/>
+        </TextBlock>
+
+        <DataGrid Grid.Row="7" Margin="20,0" x:Name="dgAddedMembers" Grid.Column="0" Grid.ColumnSpan="2" IsReadOnly="True" 
+                      AutoGenerateColumns="False" CanUserDeleteRows="False"
+                      ItemsSource="{Binding ElementName=TeamSelectCB, Path=SelectedItem.ListOfJugendliche}" Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Vorname" Binding="{Binding Teen.FirstName}"/>
+                <DataGridTextColumn Header="Nachname" Binding="{Binding Teen.LastName}"/>
+                <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding Teen.GeburtsDatum, StringFormat=dd.MM.yyyy}" />
+                <DataGridTextColumn Header="Alter n. Jahrgang" Binding="{Binding Teen.AgeYears}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <Button Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right"  Content="Teilnehmer entfernen" 
+                    Command="{Binding JugendlicherEntfernen}" 
+                    CommandParameter="{Binding ElementName=dgAddedMembers, Path=SelectedItem}" Margin="2"/>
+
     </Grid>
+
 </UserControl>

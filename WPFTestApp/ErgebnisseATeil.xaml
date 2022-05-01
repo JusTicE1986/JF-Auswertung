@@ -4,31 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFTestApp"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="White">
+    
     <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+              
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="175"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="ERGEBNISSE A-TEIL" VerticalAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
-        <ComboBox Grid.Row="1" ItemsSource="{Binding Team}" DisplayMemberPath="MannschaftName" SelectedItem="{Binding SelectedMannschaft}" Margin="2"/>
-        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
+
+        <TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="22" Typography.Capitals="AllSmallCaps" Foreground="LightGray" FontWeight="SemiBold"
+                   Text="ERGEBNISSE A-TEIL"/>
+        
+        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Left">
             <Label HorizontalAlignment="Right" Content="Vorgabepunkte:"/>
-            <Label HorizontalAlignment="Right" Content="BINDING"/>
+            <Label HorizontalAlignment="Right" Content="{Binding SelectedMannschaft.VorgabePunkte}"/>
         </StackPanel>
 
         <Grid Grid.Row="2" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -37,52 +38,29 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Content="Eindruck:" VerticalContentAlignment="Bottom"/>
+            <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Content="Fehlerpunkte:" VerticalContentAlignment="Bottom"/>
             <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Content="Einheitsführer/Melder:"/>
-            
             <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Content="Maschinist"/>
             <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Content="Angriffstrupp"/>
             <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Content="Wassertrupp"/>
             <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Content="Schlauchtrupp"/>
-            <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Content="Eindruck:"/>
-            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Einheitsführer/Melder:"/>
-            <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Maschinist"/>
-            <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Angriffstrupp"/>
-            <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Wassertrupp"/>
-            <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Schlauchtrupp"/>
+            <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" Content="Summen:"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
+            <TextBox Grid.Row="2" Grid.Column="1" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
+            <TextBox Grid.Row="3" Grid.Column="1" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
+            <TextBox Grid.Row="4" Grid.Column="1" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
+            <TextBox Grid.Row="5" Grid.Column="1" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
+            <Label Grid.Row="6" Grid.Column="1" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" Content="BINDING"/>
+            <TextBox Grid.Row="1" Grid.Column="2" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Text=""/>
+            <TextBox Grid.Row="2" Grid.Column="2" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Text=""/>
+            <TextBox Grid.Row="3" Grid.Column="2" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Text=""/>
+            <TextBox Grid.Row="4" Grid.Column="2" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Text=""/>
+            <TextBox Grid.Row="5" Grid.Column="2" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Text=""/>
+            <Label Grid.Row="6" Grid.Column="2" Width="130" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Content="BINDING"/>
+            
         </Grid>
-        <Grid Grid.Row="2" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Content="Fehlerpunkte:"/>
-            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Content="Fehlerpunkte:"/>
-            <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Content="Fehlerpunkte:"/>
-            <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" Content="Fehlerpunkte:"/>
-            <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" Content="Fehlerpunkte:"/>
-            <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Content="Fehlerpunkte:"/>
-            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
-            <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
-            <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
-            <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
-            <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text=""/>
-        </Grid>
-
-        <StackPanel Grid.Row="2" Grid.Column="1">
-            
-        </StackPanel>
-        <Label Grid.Row="1" Margin="2"/>
-        
-            
-            
     </Grid>
 </UserControl>

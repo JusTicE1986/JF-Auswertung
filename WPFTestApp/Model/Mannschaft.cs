@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using WPFTestApp.Base;
 
@@ -52,12 +53,27 @@ namespace WPFTestApp.Model
             set {SetProperty<bool> (ref _isOutOfCompetition , value); }
         }
 
-        private int _averageAge;
-
-        public int AverageAge
+        private double _averageAge;
+        public double AverageAge
         {
             get { return _averageAge; }
-            set {SetProperty<int> (ref _averageAge , value); }
+            set {SetProperty<double> (ref _averageAge , value); }
+        }
+
+        private int _vorgabePunkte;
+        public int VorgabePunkte
+        {
+            get { return _vorgabePunkte; }
+            set {SetProperty<int> (ref _vorgabePunkte , value); }
+        }
+
+
+        private double _totalPointsFragebogen;
+
+        public double TotalPointsFragebogen
+        {
+            get { return _totalPointsFragebogen; }
+            set {SetProperty<double> (ref _totalPointsFragebogen , value); }
         }
 
 
@@ -101,6 +117,7 @@ namespace WPFTestApp.Model
             return ListOfJugendliche.Remove(_jugendlicher);
         }
 
+
         public int
             Get_CountOfTeens()
         {
@@ -110,7 +127,8 @@ namespace WPFTestApp.Model
                 return ListOfJugendliche.Count;
         }
 
-        public int Calculate_PointsFragebogen()
+        public double 
+            Get_PointsOfFragebogen()
         {
             int TotalPoints = 0;
             if (ListOfJugendliche != null)
@@ -118,13 +136,20 @@ namespace WPFTestApp.Model
                 foreach (var item in ListOfJugendliche)
                 {
                     TotalPoints += item.PunkteFragebogen;
-                   
                 }
+            }
+            switch (MannschaftsArt)
+            {
+                case "Gruppe": return TotalPoints * 5;
+                case "Staffel": return TotalPoints * 7.5;
+                default:
+                    break;
             }
             return TotalPoints * 5;
         }
 
-        public int Get_AverageAge()
+        public double 
+            Get_AverageAge()
         {
             AverageAge = 0;
             if (ListOfJugendliche == null) return 0;
@@ -136,13 +161,33 @@ namespace WPFTestApp.Model
             switch (MannschaftsArt)
             {
                 case "Gruppe":
-                    return AverageAge / 9;
+                    return Math.Round(AverageAge / 9,0);
                 case "Staffel": 
-                    return AverageAge / 6;
+                    return Math.Round(AverageAge / 6,0);
                 default: return 0;
             }
         }
 
+        public int
+            Get_Vorgabepunkte()
+        {
+            VorgabePunkte = 1010;
+            switch (AverageAge)
+            {
+                case 10: return VorgabePunkte;
+                case 11: return VorgabePunkte - 5;
+                case 12: return VorgabePunkte - 10;
+                case 13: return VorgabePunkte - 15;
+                case 14: return VorgabePunkte - 20;
+                case 15: return VorgabePunkte - 25;
+                case 16: return VorgabePunkte - 30;
+                case 17: return VorgabePunkte - 35;
+                case 18: return VorgabePunkte - 40;
+                default:
+                    return 0;
+            }
+        }
+        
 
         #endregion
     }

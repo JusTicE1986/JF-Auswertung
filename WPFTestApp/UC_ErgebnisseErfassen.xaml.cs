@@ -2,9 +2,9 @@
 
 namespace WPFTestApp
 {
-    public partial class MannschaftHinzufügen : UserControl
+    public partial class UC_ErgebnisseErfassen : UserControl
     {
-        public MannschaftHinzufügen()
+        public UC_ErgebnisseErfassen()
         {
             InitializeComponent();
         }
